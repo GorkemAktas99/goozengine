@@ -44,4 +44,54 @@ from engine.gooz_engine import GoozEngine
 from wifuxlogger import WifuxLogger as LOG
 ```
 The steps here allow the motor to be called statically. Thus, there is no need to create an engine object. The LOG library used in the writing of the Wifux project is used here as well.
+## Gooz Engine
+Gooz Engine, which is built on EngineTemplate, allows the writing of different engines thanks to this template.
+```python
+from engine.engine_template import EngineTemplate
+
+class GoozEngine():
+    @staticmethod
+    def run(commands):
+        command_str = ""
+        command_array = []
+        str_flag = 0
+        for i in commands:
+            if i == "\"":
+                if str_flag == 0:
+                    str_flag = 1
+                elif str_flag == 1:
+                    str_flag = 0
+            elif i == " " and str_flag == 0:
+                command_array.append(command_str)
+                command_str = ""
+            else:
+                command_str += i
+        command_array.append(command_str)
+        command_str = ""
+        EngineTemplate(command_array)
+    
+    @staticmethod
+    def parser(commands):
+        command_str = ""
+        command_array = []
+        str_flag = 0
+        for i in commands:
+            if i == "\"":
+                if str_flag == 0:
+                    str_flag = 1
+                elif str_flag == 1:
+                    str_flag = 0
+            elif i == " " and str_flag == 0:
+                command_array.append(command_str)
+                command_str = ""
+            else:
+                command_str += i
+        command_array.append(command_str)
+        command_str = ""
+        return command_array
+```
+As you can see, this library has 2 static methods. The purpose of these is to realize the parcel process. The most important purpose of Gooz Engine is to properly convert incoming commands into list objects. If needed, new special character definitions can be added and the command argument system can be improved thanks to the changes to be made in the methods in the Gooz Engine class.
+
+## Engine Template
+
 
