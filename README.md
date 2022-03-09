@@ -94,4 +94,26 @@ As you can see, this library has 2 static methods. The purpose of these is to re
 
 ## Engine Template<hr/>
 The Engine Template is dynamically designed and designed in such a way that it can be easily shaped for general purposes and does not complicate the code development work with the growth of the project.<br/>
+The class has its own error handling. The purpose here is to prevent the operating system from crashing no matter what and to communicate the errors to the user in an understandable way.<br/>
+### Engine Template Class
+```python
+class EngineTemplate():
+    _filesystem_list = ["ls","pwd","cd","rm","rmdir","cat","clear","echo"]
+    _wifi_list = ["wifi"]
+    _engine_commands = ["shutdown","reset"]
+
+    def __init__(self,cmds):
+
+        if "$" in cmds[0]:
+            exec("import etc.env.env_manager as env")
+            exec("env.write({})".format(self.exec_formatter(cmds)))
+        
+        elif self.check_env_var(cmds):
+            for i in self.check_env_var(cmds):
+                cmds = self.env_var_parser(cmds,i)
+                self.registry(cmds)
+        else:
+            self.registry(cmds)
+```
+Here is the constructor method for the Engine Template. The system first checks if there is an environment variable record. As can be seen, the operations are not carried out directly by means of an import, but by dynamically shaped file calls. There is a registry function for the functions to be called and their parameters.
 
