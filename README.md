@@ -116,4 +116,29 @@ class EngineTemplate():
             self.registry(cmds)
 ```
 Here is the constructor method for the Engine Template. The system first checks if there is an environment variable record. As can be seen, the operations are not carried out directly by means of an import, but by dynamically shaped file calls. There is a registry function for the functions to be called and their parameters.
-
+### Registry Process
+```python
+    def registry(self,cmds):
+        try:
+            if cmds[0] in self._filesystem_list:
+                exec("import dev.filesystem.core as fsos")
+                exec("fsos.run({})".format(self.exec_formatter(cmds)))
+            elif cmds[0] in self._engine_commands:
+                exec("EngineTemplate.{}()".format(cmds[0],self.exec_formatter(cmds)))
+            elif cmds[0] in self._wifi_list:
+                exec("import dev.wifi.core as wfos")
+                exec("wfos.run({})".format(self.exec_formatter(cmds)))
+            elif cmds[0] == "env":
+                exec("import etc.env.env_manager as env")
+                exec("env.show()")
+            elif cmds[0] == "conf":
+                exec("import etc.config.core as cfos")
+                exec("cfos.run({})".format(self.exec_formatter(cmds)))
+            else:
+                exec("import app."+cmds[0]+".main as command")
+                exec("command.run({})".format(self.exec_formatter(cmds)))
+        except Exception as ex:
+            LOG.error(ex)
+            EngineErrors.command_not_found()
+```
+If a base operation is to be developed regarding the engine, it must be registered in the registry function. Otherwise, packages should be located in the app folder, such as package development. The important thing in these packages is to create a folder with the name of the package. Then there should be a main.py file in the package and a run function should be defined in this file that will take the "cmds" parameters.
