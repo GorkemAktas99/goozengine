@@ -2,6 +2,7 @@ import sys
 import machine
 import os
 from wifuxlogger import WifuxLogger as LOG
+from time import sleep as delay
 
 class EngineErrors:
     @staticmethod
@@ -40,9 +41,17 @@ class EngineTemplate():
             elif cmds[0] == "env":
                 exec("import etc.env.env_manager as env")
                 exec("env.show()")
+            elif cmds[0] == "pkg":
+                exec("import dev.packager.core as package")
+                exec("package.run({})".format(self.exec_formatter(cmds)))
             elif cmds[0] == "conf":
                 exec("import etc.config.core as cfos")
                 exec("cfos.run({})".format(self.exec_formatter(cmds)))
+            elif cmds[0] == "goozshell":
+                exec("import dev.goozshell.core as shell")
+                exec("shell.run({})".format(self.exec_formatter(cmds)))
+            elif cmds[0] == "delay":
+                delay(float(cmds[1]))
             else:
                 exec("import app."+cmds[0]+".main as command")
                 exec("command.run({})".format(self.exec_formatter(cmds)))
