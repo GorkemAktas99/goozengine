@@ -142,3 +142,27 @@ Here is the constructor method for the Engine Template. The system first checks 
             EngineErrors.command_not_found()
 ```
 If a base operation is to be developed regarding the engine, it must be registered in the registry function. Otherwise, packages should be located in the app folder, such as package development. The important thing in these packages is to create a folder with the name of the package. Then there should be a main.py file in the package and a run function should be defined in this file that will take the "cmds" parameters.
+### Static Method : Exec Formatter
+```python
+    @staticmethod
+    def exec_formatter_api(cmds):
+        cmd_temp = "["
+        for i in range(len(cmds)-1):
+            cmd_temp += "'{}',".format(cmds[i])
+        cmd_temp += "'{}'".format(cmds[len(cmds)-1])
+        cmd_temp += "]"
+        return cmd_temp
+```
+Some problems occur when the parameters are passed from a static variable to a dynamic structure in string format. An "Exec Formatter" is used in the Engine Template to prevent them. This formatter can also be called from other files as a static method. When you want to send a list parameter to the exec function, which you usually need to send the "cmds" parameters, you can use this method.
+### Static Method : Parameter Parser
+```python
+    @staticmethod
+    def parameter_parser(cmds):
+        parameter_blueprints = {}
+        for i in range(len(cmds)):
+            if "--" in cmds[i]:
+                parameter_blueprints[cmds[i]] = cmds[i+1]
+        return parameter_blueprints
+```
+Some parameters may be needed from the written command arguments. For example, in a wifi operation, you may want to transmit data such as ssid and password from the terminal as parameters. In these cases, you can separate the parameters in your commands and turn them into a blueprint, thanks to the parameter parser. Blueprints are readable json format files. They are stored as key-value pairs. So it can be accessed from within the scripts. For example, a parameter like --name hello will be sent to you with blueprint["--name"] accessibility.
+
