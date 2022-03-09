@@ -166,3 +166,20 @@ Some problems occur when the parameters are passed from a static variable to a d
 ```
 Some parameters may be needed from the written command arguments. For example, in a wifi operation, you may want to transmit data such as ssid and password from the terminal as parameters. In these cases, you can separate the parameters in your commands and turn them into a blueprint, thanks to the parameter parser. Blueprints are readable json format files. They are stored as key-value pairs. So it can be accessed from within the scripts. For example, a parameter like --name hello will be sent to you with blueprint["--name"] accessibility.
 
+## Device Features<hr/>
+You can develop device-related packages inside the engine and make them static integral parts of the engine.
+```python
+import os
+from engine.engine_template import EngineTemplate
+from wifuxlogger import WifuxLogger as LOG
+
+def run(cmds): 
+    exec("{}({})".format(cmds[0],EngineTemplate.exec_formatter_api(cmds)))
+
+def ls(cmds):
+    try:
+        LOG.info(os.listdir(cmds[1]))
+    except Exception:
+        LOG.info(os.listdir())
+```
+If we look at this example in Filesystem, the commands parsed in GoozEngine are sent to this file after being interpreted by the EngineTemplate and processed with the registry function. Functions under this script can be called with the exec function in the run function. For example, when you type "ls" in the terminal, this command is first processed by GoozEngine and recognized in ["ls"] format. EngineTemplate will then look at the contents of it and recognize that this is the "ls" command and will direct you to the run command in /dev/filesystem/core.py. And again, as can be seen in the example, the run command will send you to the ls command in this file.
