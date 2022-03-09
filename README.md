@@ -185,4 +185,10 @@ def ls(cmds):
 If we look at this example in Filesystem, the commands parsed in GoozEngine are sent to this file after being interpreted by the EngineTemplate and processed with the registry function. Functions under this script can be called with the exec function in the run function. For example, when you type "ls" in the terminal, this command is first processed by GoozEngine and recognized in ["ls"] format. EngineTemplate will then look at the contents of it and recognize that this is the "ls" command and will direct you to the run command in /dev/filesystem/core.py. And again, as can be seen in the example, the run command will send you to the ls command in this file.
 ## WiFi
 Using the GoozOS command system, the WiFi feature can be used comfortably. First of all, you need to turn on the wifi feature by turning "wifi on". Then, existing wifi ports can be scanned with "wifi ls" and then a connection can be established with the command "wifi connect --name [ssid] --password [password]". [] is not used in the command. Then, connection information can be accessed with "wifi ifconfig".
+## GoozShell
+GoozEngine does not yet include a programming language. However, it provides batch compilation for your line-based commands.
+```
+goozshell [PATH]
+```
+If there are readable commands in your files written in text format, that is, in txt format, GoozEngine will compile them for you.
 
