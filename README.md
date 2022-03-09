@@ -191,4 +191,19 @@ GoozEngine does not yet include a programming language. However, it provides bat
 goozshell [PATH]
 ```
 If there are readable commands in your files written in text format, that is, in txt format, GoozEngine will compile them for you.
+## Curl
+GoozEngine allows GET and POST HTTP operations. Example usages are as follows. You can also save a file with GET.
+Ex1
+```
+curl get --url [URL]
+```
+Ex2
+```
+curl post --url [URL] --data [DATA]
+```
+Ex3
+```
+curl get --url [URL] --save [FILENAME] --type[JSON or TXT]
+```
+With the usage seen in Ex3, you can print a downloaded content to json or txt format. Your files will be automatically saved in the /app/curl/downloads folder.
 
