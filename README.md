@@ -1,12 +1,15 @@
 # Gooz Engine for Micropython
+<hr/>
 
 This engine was designed by Görkem Aktaş for Gooz Project to run on MicroPython. Designed for Gooz OS, this engine acts as the main layer of the operating system.
 
 ## How It Works
+<hr/>
 
 MicroPython runs files over main.py. So this engine took the starting point as main.py. If desired, main.py can be changed and GoozEngine and EngineTemplate classes, which are the main parts of the engine, can be used.
 
 ## main.py
+<hr/>
 ```python
 from engine.gooz_engine import GoozEngine
 from wifuxlogger import WifuxLogger as LOG
@@ -45,6 +48,7 @@ from wifuxlogger import WifuxLogger as LOG
 ```
 The steps here allow the motor to be called statically. Thus, there is no need to create an engine object. The LOG library used in the writing of the Wifux project is used here as well.
 ## Gooz Engine
+<hr/>
 Gooz Engine, which is built on EngineTemplate, allows the writing of different engines thanks to this template.
 ```python
 from engine.engine_template import EngineTemplate
@@ -93,5 +97,6 @@ class GoozEngine():
 As you can see, this library has 2 static methods. The purpose of these is to realize the parcel process. The most important purpose of Gooz Engine is to properly convert incoming commands into list objects. If needed, new special character definitions can be added and the command argument system can be improved thanks to the changes to be made in the methods in the Gooz Engine class.
 
 ## Engine Template
-
+<hr/>
+The Engine Template is dynamically designed and designed in such a way that it can be easily shaped for general purposes and does not complicate the code development work with the growth of the project.<br/>
 
